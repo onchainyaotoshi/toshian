@@ -1,0 +1,24 @@
+{
+  "name": "toshian",
+  "version": "0.1.0",
+  "description": "A test token for use before implementing Toshi as the main token in testing utilities related to Toshi apps.",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "npx hardhat ignition deploy ./ignition/modules/deploy.ts --network localhost",
+    "deploy:sepolia": "npm run clean && npx hardhat ignition deploy ./ignition/modules/deploy.ts --network base-sepolia --verify",
+    "deploy:mainnet": "npx hardhat ignition deploy ./ignition/modules/deploy.ts --network base-mainnet --verify",
+    "clean": "rimraf ./artifacts ./cache ./typechain-types ./ignition/deployments",
+    "test": "npx hardhat test"
+  },
+  "author": "firman",
+  "license": "MIT",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "dotenv": "^16.4.5",
+    "hardhat": "^2.22.3",
+    "rimraf": "^5.0.5"
+  },
+  "dependencies": {
+    "@openzeppelin/contracts": "^5.0.2"
+  }
+}
