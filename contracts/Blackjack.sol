@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.24;
 
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 
@@ -8,7 +9,7 @@ interface IERC20Betting {
     function isTokenAllowed(address token) external view returns (bool);
 }
 
-contract Blackjack {
+contract Blackjack is Initializable{
     using SafeERC20 for IERC20;
 
     struct Card {
@@ -45,13 +46,15 @@ contract Blackjack {
     mapping(address => Session) public sessions;
     IERC20Betting public bettingContract;
 
-    event GameResult(address player, string result);
     event EventAction(Payload payload);
-    event DealerAction(address dealer, string action);
     event NewGame(address player, uint betAmount, address token);
 
-    constructor(address _bettingContract) {
+    function initialize(address _bettingContract) public initializer {
         bettingContract = IERC20Betting(_bettingContract);
+    }
+
+    constructor() {
+        _disableInitializers();
     }
 
     function startGame(address token, uint betAmount) public {
