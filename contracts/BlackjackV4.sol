@@ -9,7 +9,7 @@ interface IERC20Betting {
     function isTokenAllowed(address token) external view returns (bool);
 }
 
-contract BlackjackV3 is Initializable{
+contract BlackjackV4 is Initializable{
     using SafeERC20 for IERC20;
 
     struct Card {
@@ -33,21 +33,11 @@ contract BlackjackV3 is Initializable{
         Card[] deck;
     }
 
-    struct Payload {
-        string message;
-        string action;
-        uint playerValue;
-        Card[] playerHand;
-        uint dealerValue;
-        Card[] dealerHand;
-        bool isEnd;
-    }
-
     mapping(address => Session) public sessions;
     IERC20Betting public bettingContract;
 
-    event EventAction(Payload payload);
-    event NewGame(address player, uint betAmount, address token, string state);
+    event EventNewGame(address player, uint betAmount, address token, string state);
+    event EventInteraction(string action, string message, string state);
 
     function initialize(address _bettingContract) public initializer {
         bettingContract = IERC20Betting(_bettingContract);
@@ -81,7 +71,7 @@ contract BlackjackV3 is Initializable{
         addCardToHand(msg.sender, false); // false for dealer's hand
         addCardToHand(msg.sender, false);
 
-        emit NewGame(msg.sender, betAmount, token, getGameState(msg.sender));
+        emit EventNewGame(msg.sender, betAmount, token, getGameState(msg.sender));
 
         if (getHandValue(msg.sender, true) == 21) {
             session.player.hasBlackjack = true;
@@ -268,50 +258,20 @@ contract BlackjackV3 is Initializable{
 
         session.player.isPlaying = false;
 
-        Payload memory payload = Payload({
-            message: result,
-            action:"end",
-            playerValue: playerValue,
-            playerHand: session.playerHand,
-            dealerValue: dealerValue,
-            dealerHand: session.dealerHand,
-            isEnd:true
-        });
-
-        emit EventAction(payload);
+        emit EventInteraction("end", result, getGameState(player));
     }
 
     function dealerPlay(address player) private {
         Session storage session = sessions[player];
         session.revealDealerHand = true;
         
-        Payload memory payload = Payload({
-            message: "Reveal Dealer Hand",
-            action:"reveal",
-            playerValue: getPlayerHandValue(player),
-            playerHand: getPlayerHandCards(player),
-            dealerValue: getDealerHandValue(player),
-            dealerHand: getDealerHandCards(player),
-            isEnd:false
-        });
-
-        emit EventAction(payload);
+        emit EventInteraction("reveal", "Reveal Dealer Hand", getGameState(player));
 
         uint dealerValue = getHandValue(player, false);
         while (dealerValue < 17) {
             addCardToHand(player, false);
             
-            Payload memory payload2 = Payload({
-                message: "Dealer draws a card",
-                action:"draw",
-                playerValue: getPlayerHandValue(player),
-                playerHand: getPlayerHandCards(player),
-                dealerValue: getDealerHandValue(player),
-                dealerHand: getDealerHandCards(player),
-                isEnd:false
-            });
-
-            emit EventAction(payload2);
+            emit EventInteraction("draw", "Dealer draws a card", getGameState(player));
         }
     }
 
@@ -326,17 +286,7 @@ contract BlackjackV3 is Initializable{
         addCardToHand(msg.sender, true);
         uint playerValue = getHandValue(msg.sender, true);
 
-        Payload memory payload = Payload({
-            message: "Player Hit",
-            action:"hit",
-            playerValue: playerValue,
-            playerHand: getPlayerHandCards(msg.sender),
-            dealerValue: getDealerHandValue(msg.sender),
-            dealerHand: getDealerHandCards(msg.sender),
-            isEnd:false
-        });
-
-        emit EventAction(payload);
+        emit EventInteraction("hit", "Player Hit", getGameState(msg.sender));
 
         if (playerValue > 21) {
             sessions[msg.sender].player.hasBusted = true;
@@ -347,17 +297,7 @@ contract BlackjackV3 is Initializable{
     function playerStand() public {
         require(sessions[msg.sender].player.isPlaying, "Player must be in game to stand");
         
-        Payload memory payload = Payload({
-            message: "Player Stand",
-            action:"stand",
-            playerValue: getPlayerHandValue(msg.sender),
-            playerHand: getPlayerHandCards(msg.sender),
-            dealerValue: getDealerHandValue(msg.sender),
-            dealerHand: getDealerHandCards(msg.sender),
-            isEnd:false
-        });
-
-        emit EventAction(payload);
+        emit EventInteraction("stand", "Player Stand", getGameState(msg.sender));
 
         endGame(msg.sender);
     }
@@ -375,17 +315,7 @@ contract BlackjackV3 is Initializable{
 
         addCardToHand(msg.sender, true);
 
-        Payload memory payload = Payload({
-            message: "Player Double Down",
-            action:"double",
-            playerValue: getPlayerHandValue(msg.sender),
-            playerHand: getPlayerHandCards(msg.sender),
-            dealerValue: getDealerHandValue(msg.sender),
-            dealerHand: getDealerHandCards(msg.sender),
-            isEnd:false
-        });
-
-        emit EventAction(payload);
+        emit EventInteraction("double_down", "Player Double Down", getGameState(msg.sender));
         
         endGame(msg.sender);
     }
@@ -407,16 +337,6 @@ contract BlackjackV3 is Initializable{
             payOut(msg.sender, insuranceCost * 3); // 2:1 payout on insurance bet
         }
 
-        Payload memory payload = Payload({
-            message: "Player Buy Insurance",
-            action:"insurance",
-            playerValue: getPlayerHandValue(msg.sender),
-            playerHand: getPlayerHandCards(msg.sender),
-            dealerValue: getDealerHandValue(msg.sender),
-            dealerHand: getDealerHandCards(msg.sender),
-            isEnd:false
-        });
-
-        emit EventAction(payload);
+        emit EventInteraction("buy_insurance", "Player Buy Insurance", getGameState(msg.sender));
     }
 }
