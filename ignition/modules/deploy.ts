@@ -9,7 +9,8 @@ import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 // BlackjackModule#ToshianToken - 0xe35A7b98Ec49BEA2Fe5218F886b4c5404b3DAaF8
 // BlackjackModule#ERC20Betting - 0xF724D4A627d683Ee46c70B86d87a9cc0f933f564
 // BlackjackModule#Blackjack proxy - 0xF351b67dDADd806044F9c46feFbEccd1A0d60491
-// BlackjackModule#Blackjack impl - 0x5D1376F28A1153101ca705DB0BF8d459359EAA39
+// BlackjackModule#Blackjack impl v1 - 0x5D1376F28A1153101ca705DB0BF8d459359EAA39
+// BlackjackModule#Blackjack impl v2 - 0xC73e96ac1ED8070480e85B4ff290Aeea5cAFEE01
 
 const BlackjackModule = buildModule("BlackjackModule", (m) => {
   // Deploy the ToshianToken contract
