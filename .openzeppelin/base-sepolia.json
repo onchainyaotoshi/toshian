@@ -1,0 +1,244 @@
+{
+  "manifestVersion": "3.2",
+  "proxies": [
+    {
+      "address": "0x091fA285d06fFa17D33f48C793C0c2b4ea0224A4",
+      "txHash": "0x04b67d785c0ddb58c41fd67ebbeea72ad0c1de17222be29bd4b7bb8acaef4e9f",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x29dfD445044C6702Ac2698b1740883FEFdFB3715",
+      "txHash": "0x837e8f5a9b1f168562f5d4d2cec6c51b22c13bae0490852bd7490529cdb78e70",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x06b180d4ac2a6C9f051F8dfFc2bD95adCb72bbF5",
+      "txHash": "0xdb0a3bf7fe24143fb3d30694cb2692b6f0a7f25d1bec1c6bc674045c90308056",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x3075E012Ec40f603a912E3a93DC3f29b01D90d37",
+      "txHash": "0x9d649c3a03069166be1021b17554404996a6441bc941500935f3a67fe1847ede",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x9Df72270Adcec076a598bc05215D22411c1cA549",
+      "txHash": "0xd300e1737ffbcee0865b40980c1413488f5a0e54761c877781a049c123184903",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xB96f0E59Ceb586442A6b23924041EaA81167B767",
+      "txHash": "0xc52f3453155546dd62506ac41adfcffdf30eec529f3a0c403fc2142f13e15723",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xaAdAE09592651B204943AC7de7a22Dd065BB1E98",
+      "txHash": "0x528fab9ed3506dd0ba6852918bb50093c2cd2c431b6d44af4f60f555f94df683",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x34A9f22DC446c2ECCA788fb20fDcb6aEdEc14EFd",
+      "txHash": "0xc5bc3effda23ec274ed84c9adf830702a922f523bca17b13af45c1a0f3fc360e",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x5Af0cC8A69860E420E339591A46b5520DE77f599",
+      "txHash": "0x4800b82e53d882d6385c6328fda44e6de793699f372be2ea6de762ef6b93acd2",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xF351b67dDADd806044F9c46feFbEccd1A0d60491",
+      "txHash": "0x74162fab4ea05d1ea0ad09c6199544296229f4e6194ee4618385e4dcf2bb668f",
+      "kind": "transparent"
+    }
+  ],
+  "impls": {
+    "94eb06620a14e6aafa89e48429df8ca218b87401e7071008833aae25937d5480": {
+      "address": "0x5D1376F28A1153101ca705DB0BF8d459359EAA39",
+      "txHash": "0x68795cf15e8c42578f324064ba687862ba53847851f7d611c6bf300d44651609",
+      "layout": {
+        "solcVersion": "0.8.24",
+        "storage": [
+          {
+            "label": "sessions",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_mapping(t_address,t_struct(Session)963_storage)",
+            "contract": "Blackjack",
+            "src": "contracts\\Blackjack.sol:53"
+          },
+          {
+            "label": "bettingContract",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_contract(IERC20Betting)923",
+            "contract": "Blackjack",
+            "src": "contracts\\Blackjack.sol:54"
+          }
+        ],
+        "types": {
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_struct(InitializableStorage)10_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_struct(Card)934_storage)dyn_storage": {
+            "label": "struct Blackjack.Card[]",
+            "numberOfBytes": "32"
+          },
+          "t_contract(IERC20Betting)923": {
+            "label": "contract IERC20Betting",
+            "numberOfBytes": "20"
+          },
+          "t_mapping(t_address,t_struct(Session)963_storage)": {
+            "label": "mapping(address => struct Blackjack.Session)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Card)934_storage": {
+            "label": "struct Blackjack.Card",
+            "members": [
+              {
+                "label": "suit",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "value",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(Player)945_storage": {
+            "label": "struct Blackjack.Player",
+            "members": [
+              {
+                "label": "betAmount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "isPlaying",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "hasBlackjack",
+                "type": "t_bool",
+                "offset": 1,
+                "slot": "1"
+              },
+              {
+                "label": "hasBusted",
+                "type": "t_bool",
+                "offset": 2,
+                "slot": "1"
+              },
+              {
+                "label": "betToken",
+                "type": "t_address",
+                "offset": 3,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(Session)963_storage": {
+            "label": "struct Blackjack.Session",
+            "members": [
+              {
+                "label": "player",
+                "type": "t_struct(Player)945_storage",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "playerHand",
+                "type": "t_array(t_struct(Card)934_storage)dyn_storage",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "dealerHand",
+                "type": "t_array(t_struct(Card)934_storage)dyn_storage",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "revealDealerHand",
+                "type": "t_bool",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "deck",
+                "type": "t_array(t_struct(Card)934_storage)dyn_storage",
+                "offset": 0,
+                "slot": "5"
+              }
+            ],
+            "numberOfBytes": "192"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin\\contracts-upgradeable\\proxy\\utils\\Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

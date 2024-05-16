@@ -43,16 +43,24 @@ contract Blackjack is Initializable{
         bool isEnd;
     }
 
+    struct PayloadCard{
+        uint playerValue;
+        Card[] playerHand;
+        uint dealerValue;
+        Card[] dealerHand;
+    }
+
     mapping(address => Session) public sessions;
     IERC20Betting public bettingContract;
 
     event EventAction(Payload payload);
-    event NewGame(address player, uint betAmount, address token);
+    event NewGame(address player, uint betAmount, address token, PayloadCard payload);
 
     function initialize(address _bettingContract) public initializer {
         bettingContract = IERC20Betting(_bettingContract);
     }
 
+    /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
         _disableInitializers();
     }
@@ -85,7 +93,15 @@ contract Blackjack is Initializable{
             endGame(msg.sender);
         }
 
-        emit NewGame(msg.sender, betAmount, token);
+        PayloadCard memory payload = PayloadCard({
+            playerValue: getPlayerHandValue(msg.sender),
+            playerHand: getPlayerHandCards(msg.sender),
+            dealerValue: getDealerHandValue(msg.sender),
+            dealerHand: getDealerHandCards(msg.sender)
+        });
+
+
+        emit NewGame(msg.sender, betAmount, token, payload);
     }
 
     function initializeDeck(address player) private {

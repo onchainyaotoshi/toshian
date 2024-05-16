@@ -8,13 +8,16 @@
     "deploy:sepolia": "npm run clean && npx hardhat ignition deploy ./ignition/modules/deploy.ts --network base-sepolia --verify",
     "deploy:mainnet": "npx hardhat ignition deploy ./ignition/modules/deploy.ts --network base-mainnet --verify",
     "clean": "rimraf ./artifacts ./cache ./typechain-types ./ignition/deployments",
-    "test": "npx hardhat test"
+    "test": "npx hardhat test",
+    "deploy2": "npx hardhat run ./scripts/deploy.ts  --network base-sepolia",
+    "upgrade": "npx hardhat run ./scripts/upgrade.ts  --network base-sepolia"
   },
   "author": "firman",
   "license": "MIT",
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
     "dotenv": "^16.4.5",
+    "ethers": "^6.12.1",
     "hardhat": "^2.22.3",
     "rimraf": "^5.0.5"
   },
