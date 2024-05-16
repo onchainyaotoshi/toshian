@@ -11,6 +11,7 @@ import { buildModule } from "@nomicfoundation/hardhat-ignition/modules";
 // BlackjackModule#Blackjack proxy - 0xF351b67dDADd806044F9c46feFbEccd1A0d60491
 // BlackjackModule#Blackjack impl v1 - 0x5D1376F28A1153101ca705DB0BF8d459359EAA39
 // BlackjackModule#Blackjack impl v2 - 0xC73e96ac1ED8070480e85B4ff290Aeea5cAFEE01
+// BlackjackModule#Blackjack impl v3 - 0x96aA7F5fD1e7dC26d404E5CaFDe62C506fC329C5
 
 const BlackjackModule = buildModule("BlackjackModule", (m) => {
   // Deploy the ToshianToken contract
